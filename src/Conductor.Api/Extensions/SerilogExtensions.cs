@@ -1,5 +1,6 @@
 ﻿using System;
 using Conductor.Core;
+using Conductor.Core.Enrichers;
 using Microsoft.Extensions.Hosting;
 using Serilog.Events;
 using Serilog;
@@ -19,12 +20,23 @@ namespace Conductor.Api.Extensions
 			return enrichConfiguration.With<OperationIdEnricher>();
 		}
 
+		private static LoggerConfiguration WithBaggage(this LoggerEnrichmentConfiguration enrichConfiguration)
+		{
+			if (enrichConfiguration is null)
+			{
+				throw new ArgumentNullException(nameof(enrichConfiguration));
+			}
+
+			return enrichConfiguration.With<BaggageEnricher>();
+		}
+
 		public static LoggerConfiguration ConfigureBaseLogging(this LoggerConfiguration loggerConfiguration, HostBuilderContext context, IServiceProvider services, string appName, BuildInformation buildInformation)
 		{
 			loggerConfiguration
 				.MinimumLevel.Debug()
 				.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 				.Enrich.WithOperationId()
+				.Enrich.WithBaggage()
 				.Enrich.FromLogContext()
 				.Enrich.WithMachineName()
 				.Enrich.WithEnvironmentUserName()

@@ -2,7 +2,7 @@
 using Serilog.Core;
 using Serilog.Events;
 
-namespace Conductor.Core
+namespace Conductor.Core.Enrichers
 {
 	public class OperationIdEnricher : ILogEventEnricher
 	{
