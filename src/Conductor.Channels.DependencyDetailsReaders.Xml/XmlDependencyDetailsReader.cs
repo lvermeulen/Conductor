@@ -24,7 +24,11 @@ namespace Conductor.Channels.DependencyDetailsReaders.Xml
 			string sha = element.Descendants("Sha").FirstOrDefault()?.Value;
 			string expression = element.Descendants("Expression").FirstOrDefault()?.Value;
 
-			return new Dependency(name, version, url, sha, dependencyType, pinned, expression);
+			return new Dependency(name, version, sha, pinned, expression)
+			{
+				DependencyType = dependencyType,
+				Url = url
+			};
 		}
 
 		private IEnumerable<Dependency> ReadDependencies(string dependenciesNodeName, DependencyType dependencyType) => _document.Root

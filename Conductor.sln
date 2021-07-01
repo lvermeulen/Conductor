@@ -28,6 +28,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{95F704C9-CCBF-43F1-87FF-D7C3918E7AB4}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		global.json = global.json
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conductor.Channels.DependencyDetailsReaders", "Conductor.Channels.DependencyDetailsReaders", "{C2C3A393-E095-4F59-95B5-EF8846CAA041}"
@@ -65,6 +69,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conductor.Api.Tests", "test\Conductor.Api.Tests\Conductor.Api.Tests.csproj", "{789170A4-41E6-40B6-A178-896DBCED99C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conductor.Tests", "test\Conductor.Tests\Conductor.Tests.csproj", "{7E82568E-673A-4C13-B880-87ED5747E222}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{66CB765E-AF6E-4FA4-9863-2833FCA4FE2F}"
+	ProjectSection(SolutionItems) = preProject
+		build\build.ps1 = build\build.ps1
+		build\test.ps1 = build\test.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
