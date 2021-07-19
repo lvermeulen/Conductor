@@ -4,26 +4,26 @@ using Xunit;
 
 namespace Conductor.Channels.ExpressionReaders.Text.Tests
 {
-	public class TextExpressionReaderShould
-	{
-		[Fact]
-		public void ReadExpression()
-		{
-			const string s = "1.2.3";
+    public class TextExpressionReaderShould
+    {
+        [Fact]
+        public void ReadExpression()
+        {
+            const string s = "1.2.3";
 
-			const string buildToolsVersion = "BuildToolsVersion";
-			const string fileName = buildToolsVersion + ".txt";
-			File.WriteAllText(fileName, s);
-			try
-			{
-				IExpressionReader reader = new TextExpressionReader();
-				string version = reader.ReadExpression(buildToolsVersion);
-				Assert.Equal(s, version);
-			}
-			finally
-			{
-				File.Delete(fileName);
-			}
-		}
-	}
+            const string buildToolsVersion = "BuildToolsVersion";
+            const string fileName = buildToolsVersion + ".txt";
+            File.WriteAllText(fileName, s);
+            try
+            {
+                IExpressionReader reader = new TextExpressionReader();
+                string version = reader.ReadExpression(buildToolsVersion);
+                Assert.Equal(s, version);
+            }
+            finally
+            {
+                File.Delete(fileName);
+            }
+        }
+    }
 }

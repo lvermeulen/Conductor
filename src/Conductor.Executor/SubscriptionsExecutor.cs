@@ -1,55 +1,93 @@
-﻿//using System.Threading;
-//using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Conductor.Abstractions;
 
 namespace Conductor.Executor
 {
-	public static class SubscriptionsExecutor
-	{
-		//public static Task ExecuteSubscriptionAsync(Build newBuild, Subscription subscription, CancellationToken cancellationToken = default)
-		//{
-		//	// Determine whether the build applies to the subscription
-		//	if (subscription.SourceRepositoryUrl != newBuild.sourceRepo || subscription.ChannelName != newBuild.channel)
-		//	{
-		//		return;
-		//	}
+    public class SubscriptionsExecutor
+    {
+	    private readonly IConductorService _conductor;
 
-		//	// Determine whether trigger should be run
-		//	// For example, this might return false if we've already run once today and the subscription only runs once a day.
-		//	if (subscription.IsTriggered(newBuild))
-		//	{
-		//		return;
-		//	}
+	    public SubscriptionsExecutor(IConductorService conductor)
+	    {
+		    _conductor = conductor;
+	    }
 
-		//	// Check out the target repo and branch.
-		//	// git clone targetRepo; git checkout targetBranch
-		//	var repo = CheckOutSources(subscription.TargetRepositoryUrl, subscription.TargetBranchName);
+	    private async Task<Build> RenderBuildInfoAsync(BuildInfo buildInfo)
+	    {
+		    var channel = await _conductor.FindChannelByNameAsync(buildInfo.ChannelName);
+		    var assets = await _conductor.DownloadAssetsAsync(buildInfo.ArtifactsUrl);
 
-		//	// Check out a new branch in which to make a commit
-		//	// git checkout -b update-dependencies
-		//	repo.checkOutBranchForChanges();
+		    return new Build
+		    {
+                SourceRepository = buildInfo.SourceRepository,
+                ChannelName = buildInfo.ChannelName,
+                ArtifactsUrl = buildInfo.ArtifactsUrl,
+                Channel = channel,
+                Assets = assets
+		    };
+	    }
 
-		//	// Map assets existing in target's 
-		//	foreach (var dependency in repo.Dependencies) 
-		//	{
-		//		if (newBuild.assets.contains(dependency))
-		//		{
-		//			if (subscription.Assets.count == 0 || subscription.Assets.contains(dependency))
-		//			{
-		//				repo.updateAsset(newBuild.assets);
-		//			}
-		//		}
-		//	}
-		//	// Check quality of new repo content (do a build, etc.)
-		//	if (subscription.IsDesiredQuality(repo))
-		//	{
-		//		MergeChanges();
-		//	}
-		//	else if (subscription.HasFailureNotificationTags && subscription.IsNotBatched)
-		//	{
-		//		TagTheseUsersOnDependencyFlowPullRequest();
-		//	}
+        public async Task ExecuteSubscriptionAsync(BuildInfo newBuildInfo, Subscription subscription, CancellationToken cancellationToken = default)
+        {
+            // determine whether the build applies to the subscription
+            if (subscription.SourceRepositoryUrl != newBuildInfo.SourceRepository || subscription.ChannelName != newBuildInfo.ChannelName)
+            {
+                return;
+            }
 
-		//	return Task.CompletedTask;
-		//}
-	}
+            // determine whether trigger should be run, e.g. this might return false if we've already run once today and the subscription only runs once a day
+            if (subscription.IsTriggered(newBuildInfo))
+            {
+                return;
+            }
+
+            var newBuild = await RenderBuildInfoAsync(newBuildInfo);
+
+            // check out target repo and branch (git clone targetRepo; git checkout targetBranch)
+            var repo = await CheckOutSources(subscription.TargetRepositoryUrl, subscription.TargetBranchName, cancellationToken);
+
+            // check out a new branch in which to make a commit (git checkout -b update-dependencies)
+            await repo.CheckOutBranchForChanges();
+
+            // map assets existing in target
+            foreach (var dependency in repo.Dependencies)
+            {
+                if (newBuild.Assets.Contains(dependency)
+                    && (!subscription.Assets.Any() || subscription.Assets.Contains(dependency)))
+                {
+                    await repo.UpdateAssets(newBuild.Assets);
+                }
+            }
+            // check quality of new repo content (do a build, etc.)
+            if (subscription.IsDesiredQuality(repo))
+            {
+                await MergeChanges(cancellationToken);
+            }
+            else if (subscription.HasFailureNotificationTags && subscription.IsNotBatched)
+            {
+                await TagTheseUsersOnDependencyFlowPullRequest(cancellationToken);
+            }
+        }
+
+        private static Task<Repository> CheckOutSources(string subscriptionTargetRepositoryUrl, string subscriptionTargetBranchName, CancellationToken cancellationToken = default)
+        {
+	        // TODO: implement
+	        return Task.FromResult(new Repository());
+        }
+
+        private static Task MergeChanges(CancellationToken cancellationToken = default)
+        {
+	        // TODO: implement
+	        return Task.FromResult(true);
+        }
+
+        private static Task TagTheseUsersOnDependencyFlowPullRequest(CancellationToken cancellationToken = default)
+        {
+	        // TODO: implement
+	        return Task.FromResult(true);
+        }
+    }
 }

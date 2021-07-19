@@ -4,9 +4,9 @@ using Xunit;
 
 namespace Conductor.Channels.ExpressionReaders.SystemTextJson.Tests
 {
-	public class GlobalJsonExpressionReaderShould
-	{
-		private const string text = @"{
+    public class GlobalJsonExpressionReaderShould
+    {
+        private const string text = @"{
 	""sdk"": {
 		""version"": ""2.200.0""
 	},
@@ -15,30 +15,30 @@ namespace Conductor.Channels.ExpressionReaders.SystemTextJson.Tests
 	}
 }";
 
-		[Fact]
-		public void LoadFrom()
-		{
-			// create file
-			string fileName = $"{nameof(SystemTextJson)}-{nameof(GlobalJsonExpressionReaderShould)}-{nameof(LoadFrom)}.txt";
-			File.WriteAllText(fileName, text);
-			try
-			{
-				IExpressionReader reader = GlobalJsonExpressionReader.LoadFrom(fileName);
-				string version = reader.ReadExpression("Arcade.Sdk");
-				Assert.Equal("1.0.0", version);
-			}
-			finally
-			{
-				File.Delete(fileName);
-			}
-		}
+        [Fact]
+        public void LoadFrom()
+        {
+            // create file
+            string fileName = $"{nameof(SystemTextJson)}-{nameof(GlobalJsonExpressionReaderShould)}-{nameof(LoadFrom)}.txt";
+            File.WriteAllText(fileName, text);
+            try
+            {
+                IExpressionReader reader = GlobalJsonExpressionReader.LoadFrom(fileName);
+                string version = reader.ReadExpression("Arcade.Sdk");
+                Assert.Equal("1.0.0", version);
+            }
+            finally
+            {
+                File.Delete(fileName);
+            }
+        }
 
-		[Fact]
-		public void Parse()
-		{
-			IExpressionReader reader = GlobalJsonExpressionReader.Parse(text);
-			string version = reader.ReadExpression("Arcade.Sdk");
-			Assert.Equal("1.0.0", version);
-		}
-	}
+        [Fact]
+        public void Parse()
+        {
+            IExpressionReader reader = GlobalJsonExpressionReader.Parse(text);
+            string version = reader.ReadExpression("Arcade.Sdk");
+            Assert.Equal("1.0.0", version);
+        }
+    }
 }

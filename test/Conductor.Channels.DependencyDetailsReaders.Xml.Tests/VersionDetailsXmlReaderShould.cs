@@ -5,9 +5,9 @@ using Xunit;
 
 namespace Conductor.Channels.DependencyDetailsReaders.Xml.Tests
 {
-	public class VersionDetailsXmlReaderShould
-	{
-		const string text = @"<?xml version=""1.0"" encoding=""utf-8""?>
+    public class VersionDetailsXmlReaderShould
+    {
+        private const string text = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <Dependencies>
 
 	<!-- Elements contains all product dependencies -->
@@ -49,35 +49,35 @@ namespace Conductor.Channels.DependencyDetailsReaders.Xml.Tests
 		</Dependency>
 	</ToolsetDependencies>
 </Dependencies>";
-		
-		[Fact]
-		public void LoadFrom()
-		{
-			// create file
-			string fileName = nameof(LoadFrom) + ".txt";
-			File.WriteAllText(fileName, text);
-			try
-			{
-				IDependencyDetailsReader reader = VersionDetailsXmlReader.LoadFrom(fileName);
-				var result = reader.ReadMetadata();
-				Assert.NotNull(result);
-				Assert.NotNull(result.Dependencies);
-				Assert.Equal(6, result.Dependencies.Count());
-			}
-			finally
-			{
-				File.Delete(fileName);
-			}
-		}
-		
-		[Fact]
-		public void ReadMetadata()
-		{
-			IDependencyDetailsReader reader = VersionDetailsXmlReader.Parse(text);
-			var result = reader.ReadMetadata();
-			Assert.NotNull(result);
-			Assert.NotNull(result.Dependencies);
-			Assert.Equal(6, result.Dependencies.Count());
-		}
-	}
+
+        [Fact]
+        public void LoadFrom()
+        {
+            // create file
+            string fileName = $"{nameof(Xml)}-{nameof(VersionDetailsXmlReaderShould)}-{nameof(LoadFrom)}.txt";
+            File.WriteAllText(fileName, text);
+            try
+            {
+                IDependencyDetailsReader reader = VersionDetailsXmlReader.LoadFrom(fileName);
+                var result = reader.ReadMetadata();
+                Assert.NotNull(result);
+                Assert.NotNull(result.Dependencies);
+                Assert.Equal(6, result.Dependencies.Count());
+            }
+            finally
+            {
+                File.Delete(fileName);
+            }
+        }
+
+        [Fact]
+        public void ReadMetadata()
+        {
+            IDependencyDetailsReader reader = VersionDetailsXmlReader.Parse(text);
+            var result = reader.ReadMetadata();
+            Assert.NotNull(result);
+            Assert.NotNull(result.Dependencies);
+            Assert.Equal(6, result.Dependencies.Count());
+        }
+    }
 }

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>704da8cf-59e9-4f1f-935b-13c76dc23175</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,8 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Conductor.Channels.Handlers\Conductor.Channels.Handlers.csproj" />
-    <ProjectReference Include="..\Conductor.Subscriptions.Handlers\Conductor.Subscriptions.Handlers.csproj" />
+    <ProjectReference Include="..\Conductor.Core\Conductor.Core.csproj" />
   </ItemGroup>
 
 </Project>

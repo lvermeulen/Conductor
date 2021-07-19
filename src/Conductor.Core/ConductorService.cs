@@ -2,37 +2,74 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using Conductor.Channels;
+using Conductor.Abstractions;
+using Conductor.Executor;
 
 namespace Conductor.Core
 {
-	public class ConductorService
-	{
-		public ConcurrentDictionary<string, Channel> Channels { get; } = new ConcurrentDictionary<string, Channel>();
-		public IList<ExpressionDetailFile> ExpressionDetailFiles { get; }
-		public IList<ExpressionFile> ExpressionFiles { get; }
+    public class ConductorService : IConductorService
+    {
+        public ConcurrentDictionary<string, BuildChannel> Channels { get; } = new ConcurrentDictionary<string, BuildChannel>();
+        public IList<ExpressionDetailFile> ExpressionDetailFiles { get; }
+        public IList<ExpressionFile> ExpressionFiles { get; }
 
-		internal ConductorService(IList<ExpressionDetailFile> expressionDetailFiles, IList<ExpressionFile> expressionFiles)
-		{
-			ExpressionDetailFiles = expressionDetailFiles;
-			ExpressionFiles = expressionFiles;
-		}
+        private readonly SubscriptionsExecutor _subscriptionsExecutor;
 
-		public Task<Channel> AddChannelAsync(string name, ClassificationType classificationType, string repositoryUrl, string branchName)
-		{
-			var channel = new Channel(name, classificationType, repositoryUrl, branchName);
-			var newChannel = Channels.AddOrUpdate(name, channelName => channel, (channelName, oldChannel) => channel);
+        internal ConductorService(IList<ExpressionDetailFile> expressionDetailFiles, IList<ExpressionFile> expressionFiles)
+        {
+            ExpressionDetailFiles = expressionDetailFiles;
+            ExpressionFiles = expressionFiles;
+            _subscriptionsExecutor = new SubscriptionsExecutor(this);
+        }
 
-			return Task.FromResult(newChannel);
-		}
+        public Task<BuildChannel> AddChannelAsync(string name, ClassificationType classificationType, string repositoryUrl, string branchName)
+        {
+            var channel = new BuildChannel(name, classificationType, repositoryUrl, branchName);
+            var newChannel = Channels.AddOrUpdate(name, channelName => channel, (channelName, oldChannel) => channel);
 
-		public async Task RemoveChannelAsync(string name)
-		{
-			var channel = await FindChannelByNameAsync(name);
-			Channels.TryRemove(channel.Name, out var _);
-		}
+            return Task.FromResult(newChannel);
+        }
 
-		public Task<Channel> FindChannelByNameAsync(string channelName) => Task.FromResult(Channels.FirstOrDefault(x => x.Value.Name.Equals(channelName, StringComparison.InvariantCultureIgnoreCase)).Value);
-	}
+        public async Task RemoveChannelAsync(string name)
+        {
+            var channel = await FindChannelByNameAsync(name);
+            Channels.TryRemove(channel.Name, out var _);
+        }
+
+        public Task<BuildChannel> FindChannelByNameAsync(string channelName) => Task.FromResult(Channels.FirstOrDefault(x => x.Value.Name.Equals(channelName, StringComparison.InvariantCultureIgnoreCase)).Value);
+
+        public async Task<bool> AddOrUpdateBuildChannelAsync(BuildInfo buildInfo, CancellationToken cancellationToken = default)
+        {
+	        if (buildInfo is null || string.IsNullOrWhiteSpace(buildInfo.ChannelName))
+	        {
+		        throw new ArgumentNullException(nameof(buildInfo));
+	        }
+
+	        string channelName = buildInfo.ChannelName;
+	        var channel = await FindChannelByNameAsync(channelName);
+	        if (channel is not null)
+	        {
+		        bool result = await channel.AddOrUpdateBuildAsync(buildInfo);
+		        if (result)
+		        {
+			        foreach (var buildChannel in Channels)
+			        {
+				        foreach (var subscription in buildChannel.Value.Subscriptions)
+				        {
+					        await _subscriptionsExecutor.ExecuteSubscriptionAsync(buildInfo, subscription, cancellationToken);
+				        }
+			        }
+		        }
+	        }
+
+	        return false;
+        }
+
+        public async Task<IEnumerable<Dependency>> DownloadAssetsAsync(string url, CancellationToken cancellationToken = default)
+        {
+	        return Enumerable.Empty<Dependency>();
+        }
+    }
 }

@@ -1,9 +1,9 @@
 ﻿namespace Conductor.Abstractions
 {
-	public enum DependencyFileType
-	{
-		Xml,
-		Json,
-		Text
-	}
+    public enum DependencyFileType
+    {
+        Xml,
+        Json,
+        Text
+    }
 }

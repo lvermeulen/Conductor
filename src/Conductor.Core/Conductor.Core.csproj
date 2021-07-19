@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Conductor.Abstractions\Conductor.Abstractions.csproj" />
-    <ProjectReference Include="..\Conductor.Channels\Conductor.Channels.csproj" />
+    <ProjectReference Include="..\Conductor.Executor\Conductor.Executor.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,9 +5,9 @@ using Xunit;
 
 namespace Conductor.Channels.DependencyDetailsReaders.SystemTextJson.Tests
 {
-	public class VersionDetailsJsonReaderShould
-	{
-		private const string text = @"{
+    public class VersionDetailsJsonReaderShould
+    {
+        private const string text = @"{
 	""Dependencies"": {
 		""ProductDependencies"": [{
 			""Name"": ""DependencyA"",
@@ -52,34 +52,34 @@ namespace Conductor.Channels.DependencyDetailsReaders.SystemTextJson.Tests
 	}
 }";
 
-		[Fact]
-		public void LoadFrom()
-		{
-			// create file
-			string fileName = nameof(LoadFrom) + ".txt";
-			File.WriteAllText(fileName, text);
-			try
-			{
-				IDependencyDetailsReader reader = VersionDetailsJsonReader.LoadFrom(fileName);
-				var result = reader.ReadMetadata();
-				Assert.NotNull(result);
-				Assert.NotNull(result.Dependencies);
-				Assert.Equal(6, result.Dependencies.Count());
-			}
-			finally
-			{
-				File.Delete(fileName);
-			}
-		}
+        [Fact]
+        public void LoadFrom()
+        {
+            // create file
+            string fileName = $"{nameof(SystemTextJson)}-{nameof(VersionDetailsJsonReaderShould)}-{nameof(LoadFrom)}.txt";
+            File.WriteAllText(fileName, text);
+            try
+            {
+                IDependencyDetailsReader reader = VersionDetailsJsonReader.LoadFrom(fileName);
+                var result = reader.ReadMetadata();
+                Assert.NotNull(result);
+                Assert.NotNull(result.Dependencies);
+                Assert.Equal(6, result.Dependencies.Count());
+            }
+            finally
+            {
+                File.Delete(fileName);
+            }
+        }
 
-		[Fact]
-		public void ReadMetadata()
-		{
-			IDependencyDetailsReader reader = VersionDetailsJsonReader.Parse(text);
-			var result = reader.ReadMetadata();
-			Assert.NotNull(result);
-			Assert.NotNull(result.Dependencies);
-			Assert.Equal(6, result.Dependencies.Count());
-		}
-	}
+        [Fact]
+        public void ReadMetadata()
+        {
+            IDependencyDetailsReader reader = VersionDetailsJsonReader.Parse(text);
+            var result = reader.ReadMetadata();
+            Assert.NotNull(result);
+            Assert.NotNull(result.Dependencies);
+            Assert.Equal(6, result.Dependencies.Count());
+        }
+    }
 }
