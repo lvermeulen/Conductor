@@ -52,6 +52,6 @@ namespace Conductor.Channels.DependencyDetailsReaders.NewtonsoftJson
             return result;
         }
 
-        public Metadata ReadMetadata() => new Metadata(ReadDependencies());
+        public DependencyMetadata ReadMetadata() => new DependencyMetadata(ReadDependencies());
     }
 }

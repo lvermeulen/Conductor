@@ -1,6 +1,8 @@
+using System.IO;
 using System.Threading.Tasks;
 using Conductor.Abstractions;
 using Conductor.Core;
+using Conductor.Tests;
 using Xunit;
 
 namespace Conductor.Api.Tests.Features.Builds
@@ -12,14 +14,18 @@ namespace Conductor.Api.Tests.Features.Builds
 		[Fact]
 		public async Task Handle()
 		{
-			var channel = await _conductor.AddChannelAsync(nameof(Handle), ClassificationType.Product, "http://some.repo.url", "main");
-			bool result = await _conductor.AddOrUpdateBuildChannelAsync(new BuildInfo
+			string fileName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+			var dir = Directory.CreateDirectory(fileName);
+			string repositoryPath = dir.FullName;
+
+			using (new AutoCleanupFolder(repositoryPath))
 			{
-				SourceRepository = "http://some.source.repo.url",
-				ChannelName = channel.Name,
-				ArtifactsUrl = "http://some.artifacts.url"
-			});
-			Assert.True(result);
+				var channel = await _conductor.AddBuildChannelAsync(nameof(Handle), ClassificationType.Product, "http://some.repo.url", "main");
+				bool result = await _conductor.AddOrUpdateBuildChannelAsync(new BuildInfo("http://some.source.repo.url", channel.Name, "http://some.artifacts.url"), repositoryPath);
+				Assert.True(result);
+			}
+
+			Assert.False(Directory.Exists(repositoryPath));
 		}
 	}
 }

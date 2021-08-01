@@ -1,12 +1,12 @@
 ﻿namespace Conductor.Abstractions
 {
-    public class ExpressionDetailFile
+    public class DependencyDetailsFile
     {
         public string FileName { get; }
         public string SubPath { get; }
         public DependencyFileType DependencyFileType { get; }
 
-        public ExpressionDetailFile(string fileName, string subPath, DependencyFileType dependencyFileType)
+        public DependencyDetailsFile(string fileName, string subPath, DependencyFileType dependencyFileType)
         {
             FileName = fileName;
             SubPath = subPath;

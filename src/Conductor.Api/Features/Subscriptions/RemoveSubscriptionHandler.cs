@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Conductor.Abstractions;
-using Conductor.Core;
 using MediatR;
 
 namespace Conductor.Api.Features.Subscriptions
@@ -27,8 +26,8 @@ namespace Conductor.Api.Features.Subscriptions
                 {
                     if (subscription.Id == request.Id)
                     {
-                        var parentChannel = await _conductor.FindChannelByNameAsync(subscription.ChannelName);
-                        await parentChannel.RemoveSubscriptionAsync(subscription);
+                        var parentChannel = await _conductor.FindBuildChannelByNameAsync(subscription.ChannelName, cancellationToken);
+                        await parentChannel.RemoveSubscriptionAsync(subscription, cancellationToken);
                         return new RemoveSubscriptionResponse(subscription);
                     }
                 }

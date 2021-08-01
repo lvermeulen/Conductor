@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Conductor.Abstractions;
-using Conductor.Core;
 using MediatR;
 
 namespace Conductor.Api.Features.Subscriptions
@@ -22,13 +21,13 @@ namespace Conductor.Api.Features.Subscriptions
         public async Task<EditSubscriptionResponse> Handle(EditSubscriptionRequest request, CancellationToken cancellationToken)
         {
             var (guid, subscription) = request;
-            var channel = await _conductor.FindChannelByNameAsync(subscription.ChannelName);
+            var channel = await _conductor.FindBuildChannelByNameAsync(subscription.ChannelName, cancellationToken);
             if (channel is null)
             {
                 return null;
             }
 
-            subscription = await channel.EditSubscriptionAsync(guid, subscription.SourceRepositoryUrl, subscription.TargetRepositoryUrl, subscription.TargetBranchName, subscription.UpdateFrequency, subscription.Policies);
+            subscription = await channel.EditSubscriptionAsync(guid, subscription.SourceRepositoryUrl, subscription.TargetRepositoryUrl, subscription.TargetBranchName, subscription.UpdateFrequency, subscription.Policies, cancellationToken);
 
             return new EditSubscriptionResponse(subscription);
         }

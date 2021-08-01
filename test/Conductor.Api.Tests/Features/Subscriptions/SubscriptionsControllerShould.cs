@@ -49,13 +49,13 @@ namespace Conductor.Api.Tests.Features.Subscriptions
         [Fact]
         public async Task GetAddEditRemoveSubscriptionAsync()
         {
-            var channelsController = Factory.Services.GetRequiredService<ChannelsController>();
+            var channelsController = Factory.Services.GetRequiredService<BuildChannelsController>();
 
             var result = await _controller.GetSubscriptionsAsync();
             Assert.NotNull(result);
             Assert.Empty(result);
 
-            var channel = await channelsController.AddChannelAsync(nameof(GetAddEditRemoveSubscriptionAsync), ClassificationType.Product, "http://some.url", "feature/some-feature");
+            var channel = await channelsController.AddBuildChannelAsync(nameof(GetAddEditRemoveSubscriptionAsync), ClassificationType.Product, "http://some.url", "feature/some-feature");
             var subscription = await _controller.AddSubscriptionAsync(channel.Name, channel.RepositoryUrl, "http://some.target.url", "feature/some-target-feature", UpdateFrequency.None, Enumerable.Empty<string>());
 
             result = await _controller.GetSubscriptionsAsync();

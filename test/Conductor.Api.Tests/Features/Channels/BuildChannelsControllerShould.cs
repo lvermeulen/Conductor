@@ -9,20 +9,20 @@ using Xunit.Abstractions;
 
 namespace Conductor.Api.Tests.Features.Channels
 {
-    public class ChannelsControllerShould : BaseConductorTest<Startup>
+    public class BuildChannelsControllerShould : BaseConductorTest<Startup>
     {
-        private readonly ChannelsController _controller;
+        private readonly BuildChannelsController _controller;
 
-        public ChannelsControllerShould(ConductorWebApplicationFactory<Startup> factory, ITestOutputHelper testOutputHelper)
+        public BuildChannelsControllerShould(ConductorWebApplicationFactory<Startup> factory, ITestOutputHelper testOutputHelper)
             : base(factory, testOutputHelper)
         {
-            _controller = Factory.Services.GetRequiredService<ChannelsController>();
+            _controller = Factory.Services.GetRequiredService<BuildChannelsController>();
         }
 
         [Fact]
         public async Task GetChannelsAsync()
         {
-            var result = await _controller.GetChannelsAsync();
+            var result = await _controller.GetBuildChannelsAsync();
             Assert.NotNull(result);
             foreach (var channel in result)
             {
@@ -33,14 +33,14 @@ namespace Conductor.Api.Tests.Features.Channels
         [Fact]
         public async Task GetChannelAsync()
         {
-            var results = await _controller.GetChannelsAsync();
+            var results = await _controller.GetBuildChannelsAsync();
             var firstResult = results.FirstOrDefault();
             if (firstResult is null)
             {
                 return;
             }
 
-            var result = await _controller.GetChannelAsync(firstResult.Name);
+            var result = await _controller.GetBuildChannelAsync(firstResult.Name);
             Assert.NotNull(result);
             TestOutputHelper.WriteLine($"Channel: {result}");
         }
@@ -48,23 +48,23 @@ namespace Conductor.Api.Tests.Features.Channels
         [Fact]
         public async Task GetAddRemoveChannelAsync()
         {
-            var result = await _controller.GetChannelsAsync();
+            var result = await _controller.GetBuildChannelsAsync();
             Assert.NotNull(result);
             Assert.Empty(result);
 
-            var channel = await _controller.AddChannelAsync(nameof(GetAddRemoveChannelAsync), ClassificationType.Product, "http://some.target.url", "feature/some-feature");
+            var channel = await _controller.AddBuildChannelAsync(nameof(GetAddRemoveChannelAsync), ClassificationType.Product, "http://some.target.url", "feature/some-feature");
 
-            result = await _controller.GetChannelsAsync();
+            result = await _controller.GetBuildChannelsAsync();
             Assert.NotNull(result);
             Assert.Single(result);
 
-            var one = await _controller.GetChannelAsync(channel.Name);
+            var one = await _controller.GetBuildChannelAsync(channel.Name);
             Assert.NotNull(one);
             Assert.Equal(channel.Name, one.Name);
 
             await _controller.RemoveChannelAsync(channel.Name);
 
-            result = await _controller.GetChannelsAsync();
+            result = await _controller.GetBuildChannelsAsync();
             Assert.NotNull(result);
             Assert.Empty(result);
         }

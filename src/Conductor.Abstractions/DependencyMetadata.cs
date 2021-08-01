@@ -2,11 +2,11 @@
 
 namespace Conductor.Abstractions
 {
-    public class Metadata
+    public class DependencyMetadata
     {
         public IEnumerable<Dependency> Dependencies { get; }
 
-        public Metadata(IEnumerable<Dependency> dependencies)
+        public DependencyMetadata(IEnumerable<Dependency> dependencies)
         {
             Dependencies = dependencies;
         }

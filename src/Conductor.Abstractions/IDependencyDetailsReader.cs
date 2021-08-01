@@ -2,6 +2,6 @@
 {
     public interface IDependencyDetailsReader
     {
-        Metadata ReadMetadata();
+        DependencyMetadata ReadMetadata();
     }
 }

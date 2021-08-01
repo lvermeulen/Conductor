@@ -15,9 +15,9 @@ namespace Conductor.Api.Tests.Features.Subscriptions
         [Fact]
         public async Task Handle()
         {
-            var channel = await _conductor.AddChannelAsync(nameof(GetAddEditRemoveSubscriptionsHandlerShould), ClassificationType.Product, "http://some.url", "feature/some-feature");
-            _ = await channel.AddSubscriptionAsync("http://some.url", "http://target1.url", "feature/target1", UpdateFrequency.Daily, Enumerable.Empty<string>());
-            _ = await channel.AddSubscriptionAsync("http://some.url", "http://target2.url", "feature-target2", UpdateFrequency.Daily, Enumerable.Empty<string>());
+            var channel = await _conductor.AddBuildChannelAsync(nameof(GetAddEditRemoveSubscriptionsHandlerShould), ClassificationType.Product, "http://some.url", "feature/some-feature");
+            _ = await channel.AddSubscriptionAsync("http://some.url", "http://target1.url", "feature/target1", UpdateFrequency.Daily, Enumerable.Empty<string>(), CancellationToken.None);
+            _ = await channel.AddSubscriptionAsync("http://some.url", "http://target2.url", "feature-target2", UpdateFrequency.Daily, Enumerable.Empty<string>(), CancellationToken.None);
 
             var getHandler = new GetSubscriptionsHandler(_conductor);
             var addHandler = new AddSubscriptionHandler(_conductor);

@@ -11,11 +11,12 @@ namespace Conductor.Api.Extensions
             var conductor = new ConductorBuilder()
                 .WithDependencyDetailsFile("Version.Details.xml", "eng", DependencyFileType.Xml)
                 .WithDependencyDetailsFile("Version.Details.json", "eng", DependencyFileType.Json)
-                .WithDependencyExpressionFile("Version.props", "eng", DependencyFileType.Xml)
-                .WithDependencyExpressionFile("global.json", "eng", DependencyFileType.Json)
-                .WithDependencyExpressionFile("VersionProps.json", "eng", DependencyFileType.Json)
-                .WithDependencyExpressionFile("BuildToolsVersion.txt", "eng", DependencyFileType.Text)
-                .WithDependencyExpressionFile("DotNetCLIVersion.txt", "eng", DependencyFileType.Text)
+                .WithDependencyExpressionFile("Version.props", "eng", ExpressionFileType.Xml)
+                .WithDependencyExpressionFile("global.json", "eng", ExpressionFileType.Json)
+                .WithDependencyExpressionFile("VersionProps.json", "eng", ExpressionFileType.Json)
+                .WithDependencyExpressionFile("BuildToolsVersion.txt", "eng", ExpressionFileType.Text)
+                .WithDependencyExpressionFile("DotNetCLIVersion.txt", "eng", ExpressionFileType.Text)
+                .WithJsonSerializer(JsonSerializerType.SystemTextJson)
                 .Build();
 
             services.AddSingleton(conductor);

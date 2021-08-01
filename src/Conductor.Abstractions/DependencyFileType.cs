@@ -2,8 +2,7 @@
 {
     public enum DependencyFileType
     {
-        Xml,
-        Json,
-        Text
+	    Json,
+        Xml
     }
 }

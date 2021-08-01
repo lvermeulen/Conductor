@@ -12,4 +12,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Conductor.GitOperations\Conductor.GitOperations.csproj" />
+  </ItemGroup>
+
 </Project>

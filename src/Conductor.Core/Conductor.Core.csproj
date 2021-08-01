@@ -11,7 +11,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Conductor.Abstractions\Conductor.Abstractions.csproj" />
-    <ProjectReference Include="..\Conductor.Executor\Conductor.Executor.csproj" />
+    <ProjectReference Include="..\Conductor.Channels.DependencyDetailsReaders.NewtonsoftJson\Conductor.Channels.DependencyDetailsReaders.NewtonsoftJson.csproj" />
+    <ProjectReference Include="..\Conductor.Channels.DependencyDetailsReaders.SystemTextJson\Conductor.Channels.DependencyDetailsReaders.SystemTextJson.csproj" />
+    <ProjectReference Include="..\Conductor.Channels.DependencyDetailsReaders.Xml\Conductor.Channels.DependencyDetailsReaders.Xml.csproj" />
+    <ProjectReference Include="..\Conductor.GitOperations\Conductor.GitOperations.csproj" />
   </ItemGroup>
 
 </Project>

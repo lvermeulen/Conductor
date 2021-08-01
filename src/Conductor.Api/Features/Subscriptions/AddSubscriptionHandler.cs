@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Conductor.Abstractions;
-using Conductor.Core;
 using MediatR;
 
 namespace Conductor.Api.Features.Subscriptions
@@ -21,13 +20,13 @@ namespace Conductor.Api.Features.Subscriptions
 
         public async Task<AddSubscriptionResponse> Handle(AddSubscriptionRequest request, CancellationToken cancellationToken)
         {
-            var channel = await _conductor.FindChannelByNameAsync(request.ChannelName);
+            var channel = await _conductor.FindBuildChannelByNameAsync(request.ChannelName, cancellationToken);
             if (channel is null)
             {
                 return default;
             }
 
-            var subscription = await channel.AddSubscriptionAsync(request.SourceRepositoryUrl, request.TargetRepositoryUrl, request.TargetBranchName, request.UpdateFrequency, request.Policies);
+            var subscription = await channel.AddSubscriptionAsync(request.SourceRepositoryUrl, request.TargetRepositoryUrl, request.TargetBranchName, request.UpdateFrequency, request.Policies, cancellationToken);
             return new AddSubscriptionResponse(subscription);
         }
     }

@@ -45,6 +45,6 @@ namespace Conductor.Channels.DependencyDetailsReaders.Xml
             return result;
         }
 
-        public Metadata ReadMetadata() => new Metadata(ReadDependencies());
+        public DependencyMetadata ReadMetadata() => new DependencyMetadata(ReadDependencies());
     }
 }

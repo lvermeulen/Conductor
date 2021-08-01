@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.IO;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Conductor.Abstractions;
@@ -14,9 +15,9 @@ namespace Conductor.Api.Features.Builds
 	public class BuildsController : ControllerBase
 	{
 		private readonly IMediator _mediator;
-		private readonly ILogger<ChannelsController> _logger;
+		private readonly ILogger<BuildChannelsController> _logger;
 
-		public BuildsController(IMediator mediator, ILogger<ChannelsController> logger)
+		public BuildsController(IMediator mediator, ILogger<BuildChannelsController> logger)
 		{
 			_mediator = mediator;
 			_logger = logger;
@@ -28,7 +29,11 @@ namespace Conductor.Api.Features.Builds
 		{
 			_logger.LogTrace(nameof(AddOrUpdateBuildChannelAsync));
 
-			var result = await _mediator.Send(new AddOrUpdateBuildChannelRequest(buildInfo), cancellationToken);
+			string fileName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+			var dir = Directory.CreateDirectory(fileName);
+			string repositoryPath = dir.FullName;
+
+			var result = await _mediator.Send(new AddOrUpdateBuildChannelRequest(buildInfo, repositoryPath), cancellationToken);
 			return result.AddOrUpdateBuildChannelResult;
 		}
 	}

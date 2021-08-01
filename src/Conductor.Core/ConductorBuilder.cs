@@ -5,9 +5,10 @@ namespace Conductor.Core
 {
     public class ConductorBuilder
     {
-        public IList<ExpressionDetailFile> ExpressionDetailFiles { get; } = new List<ExpressionDetailFile>();
+	    public IList<DependencyDetailsFile> DependencyDetailsFiles { get; } = new List<DependencyDetailsFile>();
         public IList<ExpressionFile> ExpressionFiles { get; } = new List<ExpressionFile>();
+        public JsonSerializerType JsonSerializer { get; set; } = JsonSerializerType.SystemTextJson;
 
-        public IConductorService Build() => new ConductorService(ExpressionDetailFiles, ExpressionFiles);
+        public IConductorService Build() => new ConductorService(DependencyDetailsFiles, ExpressionFiles, JsonSerializer);
     }
 }

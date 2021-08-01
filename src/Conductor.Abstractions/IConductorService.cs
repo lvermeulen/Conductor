@@ -7,14 +7,15 @@ namespace Conductor.Abstractions
 {
 	public interface IConductorService
 	{
-		public ConcurrentDictionary<string, BuildChannel> Channels { get; }
-        public IList<ExpressionDetailFile> ExpressionDetailFiles { get; }
-        public IList<ExpressionFile> ExpressionFiles { get; }
+		ConcurrentDictionary<string, BuildChannel> Channels { get; }
+		IList<DependencyDetailsFile> DependencyDetailsFiles { get; }
+        IList<ExpressionFile> ExpressionFiles { get; }
+		JsonSerializerType JsonSerializerType { get; }
 
-        public Task<BuildChannel> AddChannelAsync(string name, ClassificationType classificationType, string repositoryUrl, string branchName);
-        public Task RemoveChannelAsync(string name);
-        public Task<BuildChannel> FindChannelByNameAsync(string channelName);
-        public Task<bool> AddOrUpdateBuildChannelAsync(BuildInfo buildInfo, CancellationToken cancellationToken = default);
-        public Task<IEnumerable<Dependency>> DownloadAssetsAsync(string url, CancellationToken cancellationToken = default);
+        public Task<BuildChannel> AddBuildChannelAsync(string name, ClassificationType classificationType, string repositoryUrl, string branchName, CancellationToken cancellationToken = default);
+        public Task RemoveBuildChannelAsync(string name, CancellationToken cancellationToken = default);
+        public Task<BuildChannel> FindBuildChannelByNameAsync(string channelName, CancellationToken cancellationToken = default);
+        public Task<bool> AddOrUpdateBuildChannelAsync(BuildInfo buildInfo, string repositoryPath, CancellationToken cancellationToken = default);
+        Task<Subscription> FindSubscriptionAsync(Subscription subscription, CancellationToken cancellationToken = default);
 	}
 }

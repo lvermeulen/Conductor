@@ -4,13 +4,13 @@
     {
         public string FileName { get; }
         public string SubPath { get; }
-        public DependencyFileType DependencyFileType { get; }
+        public ExpressionFileType ExpressionFileType { get; }
 
-        public ExpressionFile(string fileName, string subPath, DependencyFileType dependencyFileType)
+        public ExpressionFile(string fileName, string subPath, ExpressionFileType expressionFileType)
         {
             FileName = fileName;
             SubPath = subPath;
-            DependencyFileType = dependencyFileType;
+            ExpressionFileType = expressionFileType;
         }
     }
 }

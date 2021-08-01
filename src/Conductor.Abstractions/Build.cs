@@ -2,9 +2,5 @@
 
 namespace Conductor.Abstractions
 {
-    public class Build : BuildInfo
-    {
-        public BuildChannel Channel { get; set; }
-        public IEnumerable<Dependency> Assets { get; set; }
-    }
+	public record Build(BuildChannel Channel, IList<Dependency> Assets);
 }

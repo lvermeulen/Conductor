@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Conductor.Abstractions;
-using Conductor.Core;
 using MediatR;
 
 namespace Conductor.Api.Features.Subscriptions

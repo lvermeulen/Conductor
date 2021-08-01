@@ -10,7 +10,18 @@ namespace Conductor.Abstractions
         public bool HasFailureNotificationTags { get; set; } // TODO: implement
         public bool IsNotBatched { get; set; } // TODO: implement
 
-        public bool IsTriggered(BuildInfo build) => false; // TODO: implement
-        public bool IsDesiredQuality(Repository repository) => true; // TODO: implement
+        public bool IsTriggered(BuildInfo build)
+        {
+	        // TODO: implement
+	        return false;
+        }
+
+        public bool IsDesiredQuality(Repository repository)
+        {
+            // perform build, static analysis, etc.
+
+	        // TODO: implement
+	        return true;
+        }
     }
 }

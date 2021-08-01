@@ -26,8 +26,8 @@ namespace Conductor.Api
         {
             services
                 .AddConductor()
-                .AddMediatR(typeof(AddChannelHandler), typeof(AddSubscriptionHandler))
-                .AddTransient<ChannelsController>()
+                .AddMediatR(typeof(AddBuildChannelHandler), typeof(AddSubscriptionHandler))
+                .AddTransient<BuildChannelsController>()
                 .AddTransient<SubscriptionsController>()
                 .AddTransient<BuildsController>();
 
