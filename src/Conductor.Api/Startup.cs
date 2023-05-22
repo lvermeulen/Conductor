@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using MediatR;
 using Conductor.Api.Extensions;
 using Conductor.Api.Features.Builds;
 using Conductor.Api.Features.Channels;
@@ -26,7 +25,7 @@ namespace Conductor.Api
         {
             services
                 .AddConductor()
-                .AddMediatR(typeof(AddBuildChannelHandler), typeof(AddSubscriptionHandler))
+                .AddMediatR(configure => configure.RegisterServicesFromAssemblyContaining<AddBuildChannelHandler>())
                 .AddTransient<BuildChannelsController>()
                 .AddTransient<SubscriptionsController>()
                 .AddTransient<BuildsController>();

@@ -7,6 +7,7 @@ using MediatR;
 namespace Conductor.Api.Features.Subscriptions
 {
     public record AddSubscriptionRequest(string ChannelName, string SourceRepositoryUrl, string TargetRepositoryUrl, string TargetBranchName, UpdateFrequency UpdateFrequency, IEnumerable<string> Policies) : IRequest<AddSubscriptionResponse>;
+
     public record AddSubscriptionResponse(Subscription Subscription);
 
     public class AddSubscriptionHandler : IRequestHandler<AddSubscriptionRequest, AddSubscriptionResponse>

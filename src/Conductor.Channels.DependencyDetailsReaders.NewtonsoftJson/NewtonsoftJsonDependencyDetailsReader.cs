@@ -17,11 +17,11 @@ namespace Conductor.Channels.DependencyDetailsReaders.NewtonsoftJson
 
         private IEnumerable<Dependency> ReadDependencies(string dependenciesNodeName, DependencyType dependencyType)
         {
-            foreach ((string key, var value) in _document)
+            foreach (var (key, value) in _document)
             {
                 if (key.Equals("Dependencies", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    foreach ((string valueItemKey, var valueItemValue) in (JObject)value)
+                    foreach (var (valueItemKey, valueItemValue) in (JObject)value)
                     {
                         if (valueItemKey.Equals(dependenciesNodeName, StringComparison.InvariantCultureIgnoreCase) && valueItemValue is not null)
                         {

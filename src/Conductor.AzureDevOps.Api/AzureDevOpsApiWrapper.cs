@@ -89,7 +89,7 @@ namespace Conductor.AzureDevOps.Api
 			// select reviewers
 			var reviewerIds = await GetReviewerIdsByEmailAsync(organization, credentials, reviewerEmailAddresses.ToArray());
 
-			object body = MakePullRequest(branchName, reviewerIds);
+			var body = MakePullRequest(branchName, reviewerIds);
 			var result = await s_api.CreatePullRequestAsync(organization, projectName, repository.Id, credentials, body);
 			if (autoComplete)
 			{

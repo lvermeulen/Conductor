@@ -6,7 +6,7 @@ namespace Conductor.Channels.ExpressionReaders.SystemTextJson.Tests
 {
     public class VersionPropsJsonExpressionReaderShould
     {
-        private const string text = @"{
+        private const string Text = @"{
   ""PropertyGroup"": {
     ""MicrosoftExtensionsDependencyModelPackageVersion"": ""2.1.0-preview2-26314-02""
   }
@@ -16,12 +16,12 @@ namespace Conductor.Channels.ExpressionReaders.SystemTextJson.Tests
         public void LoadFrom()
         {
             // create file
-            string fileName = $"{nameof(SystemTextJson)}-{nameof(VersionPropsJsonExpressionReaderShould)}-{nameof(LoadFrom)}.txt";
-            File.WriteAllText(fileName, text);
+            var fileName = $"{nameof(SystemTextJson)}-{nameof(VersionPropsJsonExpressionReaderShould)}-{nameof(LoadFrom)}.txt";
+            File.WriteAllText(fileName, Text);
             try
             {
                 IExpressionReader reader = VersionPropsJsonExpressionReader.LoadFrom(fileName);
-                string version = reader.ReadExpression("MicrosoftExtensionsDependencyModelPackageVersion");
+                var version = reader.ReadExpression("MicrosoftExtensionsDependencyModelPackageVersion");
                 Assert.Equal("2.1.0-preview2-26314-02", version);
             }
             finally
@@ -33,8 +33,8 @@ namespace Conductor.Channels.ExpressionReaders.SystemTextJson.Tests
         [Fact]
         public void Parse()
         {
-            IExpressionReader reader = VersionPropsJsonExpressionReader.Parse(text);
-            string version = reader.ReadExpression("MicrosoftExtensionsDependencyModelPackageVersion");
+            IExpressionReader reader = VersionPropsJsonExpressionReader.Parse(Text);
+            var version = reader.ReadExpression("MicrosoftExtensionsDependencyModelPackageVersion");
             Assert.Equal("2.1.0-preview2-26314-02", version);
         }
     }

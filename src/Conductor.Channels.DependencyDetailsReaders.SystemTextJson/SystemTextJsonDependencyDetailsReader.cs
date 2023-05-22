@@ -17,13 +17,13 @@ namespace Conductor.Channels.DependencyDetailsReaders.SystemTextJson
 
         private IEnumerable<Dependency> ReadDependencies(string dependenciesNodeName, DependencyType dependencyType)
         {
-            var items = JsonSerializer.Deserialize<Dictionary<string, object>>(_document.RootElement.ToString() ?? "");
+            var items = JsonSerializer.Deserialize<Dictionary<string, object>>(_document.RootElement.ToString());
             if (items is null)
             {
                 return Enumerable.Empty<Dependency>();
             }
 
-            foreach ((string key, object value) in items)
+            foreach (var (key, value) in items)
             {
                 if (key.Equals("Dependencies", StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -32,7 +32,7 @@ namespace Conductor.Channels.DependencyDetailsReaders.SystemTextJson
                     {
                         if (valueItem.Name.Equals(dependenciesNodeName, StringComparison.InvariantCultureIgnoreCase))
                         {
-                            string json = valueItem.Value.ToString() ?? "";
+                            var json = valueItem.Value.ToString();
                             var dependencies = JsonSerializer.Deserialize<IEnumerable<Dependency>>(json);
 
                             foreach (var dependency in dependencies ?? Enumerable.Empty<Dependency>())

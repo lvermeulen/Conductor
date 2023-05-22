@@ -39,9 +39,9 @@ namespace Conductor.Api
                     .ConfigureSerilog(context, services, "Conductor.Api", s_applicationVersionInformation.GetBuildInformation()))
                 .ConfigureWebHost(hostBuilder => hostBuilder
                     .ConfigureKestrel(options => options.AddServerHeader = false))
-                    .ConfigureWebHostDefaults(webBuilder =>
-                    {
-                        webBuilder.UseStartup<Startup>();
-                    });
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }

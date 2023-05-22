@@ -29,9 +29,9 @@ namespace Conductor.Api.Features.Builds
 		{
 			_logger.LogTrace(nameof(AddOrUpdateBuildChannelAsync));
 
-			string fileName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+			var fileName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 			var dir = Directory.CreateDirectory(fileName);
-			string repositoryPath = dir.FullName;
+			var repositoryPath = dir.FullName;
 
 			var result = await _mediator.Send(new AddOrUpdateBuildChannelRequest(buildInfo, repositoryPath), cancellationToken);
 			return result.AddOrUpdateBuildChannelResult;

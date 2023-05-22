@@ -12,7 +12,7 @@ namespace Conductor.Channels.DependencyDetailsReaders.NewtonsoftJson
                 return null;
             }
 
-            string s = File.ReadAllText(fileName);
+            var s = File.ReadAllText(fileName);
             return Parse(s);
         }
 
@@ -21,6 +21,5 @@ namespace Conductor.Channels.DependencyDetailsReaders.NewtonsoftJson
         public VersionDetailsJsonReader(JObject document)
             : base(document)
         { }
-
     }
 }

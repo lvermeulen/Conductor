@@ -7,6 +7,7 @@ using MediatR;
 namespace Conductor.Api.Features.Subscriptions
 {
     public record RemoveSubscriptionRequest(Guid Id) : IRequest<RemoveSubscriptionResponse>;
+
     public record RemoveSubscriptionResponse(Subscription Subscription);
 
     public class RemoveSubscriptionHandler : IRequestHandler<RemoveSubscriptionRequest, RemoveSubscriptionResponse>

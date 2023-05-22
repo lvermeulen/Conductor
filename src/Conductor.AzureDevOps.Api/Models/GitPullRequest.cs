@@ -7,7 +7,8 @@ namespace Conductor.AzureDevOps.Api.Models
 	{
 		[JsonProperty("_links")]
 		public ReferenceLinks Links { get; set; }
-		public string ArtifactId { get; set; }
+
+        public string ArtifactId { get; set; }
 		public IdentityRef AutoCompleteSetBy { get; set; }
 		public IdentityRef ClosedBy { get; set; }
 		public string ClosedDate { get; set; }

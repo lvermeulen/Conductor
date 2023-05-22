@@ -14,14 +14,14 @@ namespace Conductor.Api.Tests.Features.Builds
 		[Fact]
 		public async Task Handle()
 		{
-			string fileName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+			var fileName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 			var dir = Directory.CreateDirectory(fileName);
-			string repositoryPath = dir.FullName;
+			var repositoryPath = dir.FullName;
 
 			using (new AutoCleanupFolder(repositoryPath))
 			{
 				var channel = await _conductor.AddBuildChannelAsync(nameof(Handle), ClassificationType.Product, "http://some.repo.url", "main");
-				bool result = await _conductor.AddOrUpdateBuildChannelAsync(new BuildInfo("http://some.source.repo.url", channel.Name, "http://some.artifacts.url"), repositoryPath);
+				var result = await _conductor.AddOrUpdateBuildChannelAsync(new BuildInfo("http://some.source.repo.url", channel.Name, "http://some.artifacts.url"), repositoryPath);
 				Assert.True(result);
 			}
 

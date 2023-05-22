@@ -66,7 +66,7 @@ namespace Conductor.Abstractions
 
 	            if (dependency != null)
 	            {
-		            int index = Dependencies.IndexOf(dependency);
+		            var index = Dependencies.IndexOf(dependency);
 		            if (index >= 0)
 		            {
 			            Dependencies.RemoveAt(index);

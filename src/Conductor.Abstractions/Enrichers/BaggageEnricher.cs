@@ -13,7 +13,7 @@ namespace Conductor.Abstractions.Enrichers
                 return;
             }
 
-            foreach ((string key, string value) in Activity.Current.Baggage)
+            foreach (var (key, value) in Activity.Current.Baggage)
             {
                 logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty(key, value));
             }

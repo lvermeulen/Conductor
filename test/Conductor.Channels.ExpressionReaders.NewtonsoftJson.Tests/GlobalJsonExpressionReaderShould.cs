@@ -6,7 +6,7 @@ namespace Conductor.Channels.ExpressionReaders.NewtonsoftJson.Tests
 {
     public class GlobalJsonExpressionReaderShould
     {
-        private const string text = @"{
+        private const string Text = @"{
 	""sdk"": {
 		""version"": ""2.200.0""
 	},
@@ -19,12 +19,12 @@ namespace Conductor.Channels.ExpressionReaders.NewtonsoftJson.Tests
         public void LoadFrom()
         {
             // create file
-            string fileName = $"{nameof(NewtonsoftJson)}-{nameof(GlobalJsonExpressionReaderShould)}-{nameof(LoadFrom)}.txt";
-            File.WriteAllText(fileName, text);
+            var fileName = $"{nameof(NewtonsoftJson)}-{nameof(GlobalJsonExpressionReaderShould)}-{nameof(LoadFrom)}.txt";
+            File.WriteAllText(fileName, Text);
             try
             {
                 IExpressionReader reader = GlobalJsonExpressionReader.LoadFrom(fileName);
-                string version = reader.ReadExpression("Arcade.Sdk");
+                var version = reader.ReadExpression("Arcade.Sdk");
                 Assert.Equal("1.0.0", version);
             }
             finally
@@ -36,8 +36,8 @@ namespace Conductor.Channels.ExpressionReaders.NewtonsoftJson.Tests
         [Fact]
         public void Parse()
         {
-            IExpressionReader reader = GlobalJsonExpressionReader.Parse(text);
-            string version = reader.ReadExpression("Arcade.Sdk");
+            IExpressionReader reader = GlobalJsonExpressionReader.Parse(Text);
+            var version = reader.ReadExpression("Arcade.Sdk");
             Assert.Equal("1.0.0", version);
         }
     }

@@ -7,7 +7,7 @@ namespace Conductor.Channels.DependencyDetailsReaders.NewtonsoftJson.Tests
 {
     public class VersionDetailsJsonReaderShould
     {
-        private const string text = @"{
+        private const string Text = @"{
 	""Dependencies"": {
 		""ProductDependencies"": [{
 			""Name"": ""DependencyA"",
@@ -56,8 +56,8 @@ namespace Conductor.Channels.DependencyDetailsReaders.NewtonsoftJson.Tests
         public void LoadFrom()
         {
             // create file
-            string fileName = $"{nameof(NewtonsoftJson)}-{nameof(VersionDetailsJsonReaderShould)}-{nameof(LoadFrom)}.txt";
-            File.WriteAllText(fileName, text);
+            var fileName = $"{nameof(NewtonsoftJson)}-{nameof(VersionDetailsJsonReaderShould)}-{nameof(LoadFrom)}.txt";
+            File.WriteAllText(fileName, Text);
             try
             {
                 IDependencyDetailsReader reader = VersionDetailsJsonReader.LoadFrom(fileName);
@@ -75,7 +75,7 @@ namespace Conductor.Channels.DependencyDetailsReaders.NewtonsoftJson.Tests
         [Fact]
         public void Parse()
         {
-            IDependencyDetailsReader reader = VersionDetailsJsonReader.Parse(text);
+            IDependencyDetailsReader reader = VersionDetailsJsonReader.Parse(Text);
             var result = reader.ReadMetadata();
             Assert.NotNull(result);
             Assert.NotNull(result.Dependencies);

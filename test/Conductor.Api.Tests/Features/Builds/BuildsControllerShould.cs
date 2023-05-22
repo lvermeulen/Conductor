@@ -26,7 +26,7 @@ namespace Conductor.Api.Tests.Features.Builds
         public async Task AddOrUpdateBuildChannelAsync()
         {
 	        var channel = await _channelsController.AddBuildChannelAsync(nameof(AddOrUpdateBuildChannelAsync), ClassificationType.Product, "http://some.repo.url", "main", CancellationToken.None);
-	        bool result = await _controller.AddOrUpdateBuildChannelAsync(new BuildInfo("http://some.url", channel.Name, "http://some.artifact.url"), CancellationToken.None);
+	        var result = await _controller.AddOrUpdateBuildChannelAsync(new BuildInfo("http://some.url", channel.Name, "http://some.artifact.url"), CancellationToken.None);
             Assert.True(result);
         }
 	}

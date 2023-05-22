@@ -30,8 +30,8 @@ namespace Conductor.Abstractions
 
         public Task<BuildInfo> GetBuildAsync(string buildName, CancellationToken cancellationToken)
         {
-	        var result = Builds.ContainsKey(buildName)
-                ? Builds[buildName]
+	        var result = Builds.TryGetValue(buildName, out var buildNameValue)
+                ? buildNameValue
                 : default;
 
 	        return Task.FromResult(result);

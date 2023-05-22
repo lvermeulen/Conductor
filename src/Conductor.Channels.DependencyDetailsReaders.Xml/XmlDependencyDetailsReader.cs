@@ -17,11 +17,11 @@ namespace Conductor.Channels.DependencyDetailsReaders.Xml
 
         private static Dependency ReadDependency(XElement element, DependencyType dependencyType)
         {
-            string name = element.Attribute("Name")?.Value;
-            string version = element.Attribute("Version")?.Value;
-            bool? pinned = (element.Attribute("Pinned")?.Value ?? "false").ToNullableBool();
-            string sha = element.Descendants("Sha").FirstOrDefault()?.Value;
-            string expression = element.Descendants("Expression").FirstOrDefault()?.Value;
+            var name = element.Attribute("Name")?.Value;
+            var version = element.Attribute("Version")?.Value;
+            var pinned = (element.Attribute("Pinned")?.Value ?? "false").ToNullableBool();
+            var sha = element.Descendants("Sha").FirstOrDefault()?.Value;
+            var expression = element.Descendants("Expression").FirstOrDefault()?.Value;
 
             return new Dependency(name, version, sha, pinned, expression)
             {

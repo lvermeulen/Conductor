@@ -12,7 +12,7 @@ namespace Conductor.Channels.ExpressionReaders.NewtonsoftJson
                 return null;
             }
 
-            string s = File.ReadAllText(fileName);
+            var s = File.ReadAllText(fileName);
             return Parse(s);
         }
 

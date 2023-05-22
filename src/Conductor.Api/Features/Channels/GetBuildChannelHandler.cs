@@ -7,6 +7,7 @@ using MediatR;
 namespace Conductor.Api.Features.Channels
 {
     public record GetBuildChannelsRequest : IRequest<GetBuildChannelsResponse>;
+
     public record GetBuildChannelsResponse(IEnumerable<BuildChannel> Channels);
 
     public class GetBuildChannelsHandler : IRequestHandler<GetBuildChannelsRequest, GetBuildChannelsResponse>

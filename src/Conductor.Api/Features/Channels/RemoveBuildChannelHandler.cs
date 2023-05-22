@@ -6,6 +6,7 @@ using MediatR;
 namespace Conductor.Api.Features.Channels
 {
     public record RemoveBuildChannelRequest(string Name) : IRequest<RemoveBuildChannelResponse>;
+
     public record RemoveBuildChannelResponse(BuildChannel Channel);
 
     public class RemoveBuildChannelHandler : IRequestHandler<RemoveBuildChannelRequest, RemoveBuildChannelResponse>

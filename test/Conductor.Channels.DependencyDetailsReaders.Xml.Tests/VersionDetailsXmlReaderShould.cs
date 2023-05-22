@@ -7,7 +7,7 @@ namespace Conductor.Channels.DependencyDetailsReaders.Xml.Tests
 {
     public class VersionDetailsXmlReaderShould
     {
-        private const string text = @"<?xml version=""1.0"" encoding=""utf-8""?>
+        private const string Text = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <Dependencies>
 
 	<!-- Elements contains all product dependencies -->
@@ -54,8 +54,8 @@ namespace Conductor.Channels.DependencyDetailsReaders.Xml.Tests
         public void LoadFrom()
         {
             // create file
-            string fileName = $"{nameof(Xml)}-{nameof(VersionDetailsXmlReaderShould)}-{nameof(LoadFrom)}.txt";
-            File.WriteAllText(fileName, text);
+            var fileName = $"{nameof(Xml)}-{nameof(VersionDetailsXmlReaderShould)}-{nameof(LoadFrom)}.txt";
+            File.WriteAllText(fileName, Text);
             try
             {
                 IDependencyDetailsReader reader = VersionDetailsXmlReader.LoadFrom(fileName);
@@ -73,7 +73,7 @@ namespace Conductor.Channels.DependencyDetailsReaders.Xml.Tests
         [Fact]
         public void ReadMetadata()
         {
-            IDependencyDetailsReader reader = VersionDetailsXmlReader.Parse(text);
+            IDependencyDetailsReader reader = VersionDetailsXmlReader.Parse(Text);
             var result = reader.ReadMetadata();
             Assert.NotNull(result);
             Assert.NotNull(result.Dependencies);

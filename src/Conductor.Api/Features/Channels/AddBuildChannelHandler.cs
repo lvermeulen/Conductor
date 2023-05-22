@@ -6,6 +6,7 @@ using MediatR;
 namespace Conductor.Api.Features.Channels
 {
     public record AddBuildChannelRequest(string ChannelName, ClassificationType ClassificationType, string RepositoryUrl, string BranchName) : IRequest<AddBuildChannelResponse>;
+
     public record AddBuildChannelResponse(BuildChannel Channel);
 
     public class AddBuildChannelHandler : IRequestHandler<AddBuildChannelRequest, AddBuildChannelResponse>

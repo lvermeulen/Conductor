@@ -7,6 +7,7 @@ using MediatR;
 namespace Conductor.Api.Features.Subscriptions
 {
     public record EditSubscriptionRequest(Guid Id, Subscription Subscription) : IRequest<EditSubscriptionResponse>;
+
     public record EditSubscriptionResponse(Subscription Subscription);
 
     public class EditSubscriptionHandler : IRequestHandler<EditSubscriptionRequest, EditSubscriptionResponse>

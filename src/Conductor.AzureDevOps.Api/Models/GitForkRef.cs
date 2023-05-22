@@ -7,7 +7,8 @@ namespace Conductor.AzureDevOps.Api.Models
 	{
 		[JsonProperty("_links")]
 		public ReferenceLinks Links { get; set; }
-		public IdentityRef Creator { get; set; }
+
+        public IdentityRef Creator { get; set; }
 		public bool IsLocked { get; set; }
 		public IdentityRef IsLockedBy { get; set; }
 		public string Name { get; set; }

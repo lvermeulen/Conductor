@@ -8,7 +8,7 @@ namespace Conductor.Abstractions
 
     public class ApplicationVersionInformation
     {
-        private const string buildFileName = "buildinfo.json";
+        private const string BuildFileName = "buildinfo.json";
 
         private BuildInformation _fileBuildInfo = new BuildInformation(
             BranchName: "",
@@ -19,7 +19,7 @@ namespace Conductor.Abstractions
 
         public void InitializeBuildInformationFromFolder(string path)
         {
-            string buildFilePath = Path.Combine(path, buildFileName);
+            var buildFilePath = Path.Combine(path, BuildFileName);
             if (!File.Exists(buildFilePath))
             {
                 return;
@@ -27,13 +27,13 @@ namespace Conductor.Abstractions
 
             try
             {
-                string buildInfoJson = File.ReadAllText(buildFilePath);
+                var buildInfoJson = File.ReadAllText(buildFilePath);
                 var buildInformation = JsonSerializer.Deserialize<BuildInformation>(buildInfoJson, new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
 
-                _fileBuildInfo = buildInformation ?? throw new InvalidOperationException($"Failed to deserialize {buildFileName}");
+                _fileBuildInfo = buildInformation ?? throw new InvalidOperationException($"Failed to deserialize {BuildFileName}");
             }
             catch (Exception)
             {

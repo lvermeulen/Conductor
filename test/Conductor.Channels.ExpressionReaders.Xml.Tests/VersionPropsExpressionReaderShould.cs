@@ -6,7 +6,7 @@ namespace Conductor.Channels.ExpressionReaders.Xml.Tests
 {
     public class VersionPropsExpressionReaderShould
     {
-        private const string text = @"<PropertyGroup>
+        private const string Text = @"<PropertyGroup>
 	<MicrosoftExtensionsDependencyModelPackageVersion>2.1.0-preview2-26314-02</MicrosoftExtensionsDependencyModelPackageVersion>
 </PropertyGroup>";
 
@@ -14,12 +14,12 @@ namespace Conductor.Channels.ExpressionReaders.Xml.Tests
         public void LoadFrom()
         {
             // create file
-            string fileName = $"{nameof(Xml)}-{nameof(VersionPropsExpressionReaderShould)}-{nameof(LoadFrom)}.txt";
-            File.WriteAllText(fileName, text);
+            var fileName = $"{nameof(Xml)}-{nameof(VersionPropsExpressionReaderShould)}-{nameof(LoadFrom)}.txt";
+            File.WriteAllText(fileName, Text);
             try
             {
                 IExpressionReader reader = VersionPropsExpressionReader.LoadFrom(fileName);
-                string version = reader.ReadExpression("MicrosoftExtensionsDependencyModelPackageVersion");
+                var version = reader.ReadExpression("MicrosoftExtensionsDependencyModelPackageVersion");
                 Assert.Equal("2.1.0-preview2-26314-02", version);
             }
             finally
@@ -31,8 +31,8 @@ namespace Conductor.Channels.ExpressionReaders.Xml.Tests
         [Fact]
         public void Parse()
         {
-            IExpressionReader reader = VersionPropsExpressionReader.Parse(text);
-            string version = reader.ReadExpression("MicrosoftExtensionsDependencyModelPackageVersion");
+            IExpressionReader reader = VersionPropsExpressionReader.Parse(Text);
+            var version = reader.ReadExpression("MicrosoftExtensionsDependencyModelPackageVersion");
             Assert.Equal("2.1.0-preview2-26314-02", version);
         }
     }

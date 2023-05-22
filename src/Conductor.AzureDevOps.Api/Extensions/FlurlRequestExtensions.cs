@@ -13,7 +13,7 @@ namespace Conductor.AzureDevOps.Api.Extensions
 	{
 		internal static IList<JToken> GetJsonTokens(this string json) => JObject.Parse(json);
 
-		internal static JProperty GetJsonPropertyByIndex(this IList<JToken> tokens, int index) => (JProperty) tokens[index];
+		internal static JProperty GetJsonPropertyByIndex(this IList<JToken> tokens, int index) => (JProperty)tokens[index];
 
 		internal static JProperty GetJsonPropertyByName(this IList<JToken> tokens, string name) => tokens
 			.OfType<JProperty>()
@@ -27,7 +27,7 @@ namespace Conductor.AzureDevOps.Api.Extensions
 				return default;
 			}
 
-			string responseString = await responseMessage.ResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+			var responseString = await responseMessage.ResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 			return responseString.GetJsonTokens();
 		}
 

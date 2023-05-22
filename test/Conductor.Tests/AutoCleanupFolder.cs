@@ -20,29 +20,32 @@ namespace Conductor.Tests
             {
                 return;
             }
+
             NormalizeAttributes(directoryPath);
             DeleteDirectory(directoryPath, maxAttempts: 5, initialTimeout: 16, timeoutFactor: 2);
         }
 
         private static void NormalizeAttributes(string directoryPath)
         {
-            string[] filePaths = Directory.GetFiles(directoryPath);
-            string[] subdirectoryPaths = Directory.GetDirectories(directoryPath);
+            var filePaths = Directory.GetFiles(directoryPath);
+            var subdirectoryPaths = Directory.GetDirectories(directoryPath);
 
-            foreach (string filePath in filePaths)
+            foreach (var filePath in filePaths)
             {
                 File.SetAttributes(filePath, FileAttributes.Normal);
             }
-            foreach (string subdirectoryPath in subdirectoryPaths)
+
+            foreach (var subdirectoryPath in subdirectoryPaths)
             {
                 NormalizeAttributes(subdirectoryPath);
             }
+
             File.SetAttributes(directoryPath, FileAttributes.Normal);
         }
 
         private static void DeleteDirectory(string directoryPath, int maxAttempts, int initialTimeout, int timeoutFactor)
         {
-            for (int attempt = 1; attempt <= maxAttempts; attempt++)
+            for (var attempt = 1; attempt <= maxAttempts; attempt++)
             {
                 try
                 {

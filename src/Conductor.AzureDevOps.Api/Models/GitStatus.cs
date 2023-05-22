@@ -6,7 +6,8 @@ namespace Conductor.AzureDevOps.Api.Models
 	{
 		[JsonProperty("_links")]
 		public ReferenceLinks Links { get; set; }
-		public GitStatusContext Context { get; set; }
+
+        public GitStatusContext Context { get; set; }
 		public IdentityRef CreatedBy { get; set; }
 		public string CreationDate { get; set; }
 		public string Description { get; set; }

@@ -47,7 +47,7 @@ namespace Conductor.Core
         public async Task<Subscription> FindSubscriptionAsync(Subscription subscription, CancellationToken cancellationToken = default)
         {
 	        var channel = await FindBuildChannelByNameAsync(subscription.ChannelName, cancellationToken);
-	        int index = channel.Subscriptions.IndexOf(subscription);
+	        var index = channel.Subscriptions.IndexOf(subscription);
 	        return channel.Subscriptions.ElementAt(index);
         }
 
@@ -58,11 +58,11 @@ namespace Conductor.Core
 		        throw new ArgumentNullException(nameof(buildInfo));
 	        }
 
-	        string channelName = buildInfo.ChannelName;
+	        var channelName = buildInfo.ChannelName;
 	        var channel = await FindBuildChannelByNameAsync(channelName, cancellationToken);
 	        if (channel is not null)
 	        {
-		        bool result = await channel.AddOrUpdateBuildAsync(buildInfo, cancellationToken);
+		        var result = await channel.AddOrUpdateBuildAsync(buildInfo, cancellationToken);
 		        if (result)
 		        {
 			        foreach (var buildChannel in Channels)

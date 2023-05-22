@@ -14,16 +14,16 @@ namespace Conductor.Channels.ExpressionReaders.NewtonsoftJson
 
         public string ReadExpression(string expression)
         {
-            foreach ((string key, var value) in _document)
+            foreach (var (key, value) in _document)
             {
                 if (key == expression)
                 {
                     return value?.Value<string>();
                 }
 
-                if (value is JObject jobj && jobj.ContainsKey(expression))
+                if (value is JObject jobj && jobj.TryGetValue(expression, out var jobjValue))
                 {
-                    return jobj[expression]?.Value<string>();
+                    return jobjValue.Value<string>();
                 }
             }
 

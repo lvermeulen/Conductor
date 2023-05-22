@@ -15,13 +15,13 @@ namespace Conductor.Channels.ExpressionReaders.SystemTextJson
 
         public string ReadExpression(string expression)
         {
-            var items = JsonSerializer.Deserialize<Dictionary<string, object>>(_document.RootElement.ToString() ?? "");
+            var items = JsonSerializer.Deserialize<Dictionary<string, object>>(_document.RootElement.ToString());
             if (items is null)
             {
                 return null;
             }
 
-            foreach ((string key, object value) in items)
+            foreach (var (key, value) in items)
             {
                 if (key == expression)
                 {

@@ -35,8 +35,8 @@ namespace Conductor.Core
 		{
 			async Task<Stream> GetFileStreamAsync()
 			{
-				string fileName = new Uri(url).LocalPath;
-				string fileContents = await File.ReadAllTextAsync(fileName, cancellationToken);
+				var fileName = new Uri(url).LocalPath;
+				var fileContents = await File.ReadAllTextAsync(fileName, cancellationToken);
 				var stm = new MemoryStream(Encoding.UTF8.GetBytes(fileContents));
 				return stm;
 			}
@@ -67,8 +67,8 @@ namespace Conductor.Core
 		{
 			async Task<StringReader> GetFileReaderAsync()
 			{
-				string fileName = new Uri(url).LocalPath;
-				string fileContents = await File.ReadAllTextAsync(fileName, cancellationToken);
+				var fileName = new Uri(url).LocalPath;
+				var fileContents = await File.ReadAllTextAsync(fileName, cancellationToken);
 				var stringReader = new StringReader(fileContents);
 				return stringReader;
 			}
@@ -82,7 +82,7 @@ namespace Conductor.Core
 					return default;
 				}
 
-				string s = await result.Content.ReadAsStringAsync(cancellationToken);
+				var s = await result.Content.ReadAsStringAsync(cancellationToken);
 				var stringReader = new StringReader(s);
 				return stringReader;
 			}
@@ -91,7 +91,7 @@ namespace Conductor.Core
 				? await GetFileReaderAsync()
 				: await GetHttpReaderAsync();
 
-			using var jsonReader = new JsonTextReader(stringReader);
+            await using var jsonReader = new JsonTextReader(stringReader);
 			var doc = await JObject.LoadAsync(jsonReader, null, cancellationToken);
 			var metadata = new Channels.DependencyDetailsReaders.NewtonsoftJson.VersionDetailsJsonReader(doc).ReadMetadata();
 			return metadata;
@@ -101,8 +101,8 @@ namespace Conductor.Core
 		{
 			async Task<Stream> GetFileStreamAsync()
 			{
-				string fileName = new Uri(url).LocalPath;
-				string fileContents = await File.ReadAllTextAsync(fileName, cancellationToken);
+				var fileName = new Uri(url).LocalPath;
+				var fileContents = await File.ReadAllTextAsync(fileName, cancellationToken);
 				var stm = new MemoryStream(Encoding.UTF8.GetBytes(fileContents));
 				return stm;
 			}
@@ -147,19 +147,19 @@ namespace Conductor.Core
 
 			foreach (var dependencyDetailsFile in _conductor.DependencyDetailsFiles)
 			{
-				string actualUrl = string.IsNullOrWhiteSpace(dependencyDetailsFile.SubPath)
+				var actualUrl = string.IsNullOrWhiteSpace(dependencyDetailsFile.SubPath)
 					? $"{url}/"
 					: $"{url}/{dependencyDetailsFile.SubPath}/";
-				string dependencyDetailsUrl = $"{actualUrl}{dependencyDetailsFile.FileName}";
+				var dependencyDetailsUrl = $"{actualUrl}{dependencyDetailsFile.FileName}";
 
 				var metadata = await GetMetadataAsync(dependencyDetailsUrl, dependencyDetailsFile.DependencyFileType, cancellationToken);
 				foreach (var dependency in metadata.Dependencies)
 				{
-					string name = dependencyDetailsFile.FileName;
-					string version = dependency.Version;
-					string sha = dependency.Sha;
-					bool pinned = dependency.Pinned == true;
-					string expression = dependency.Expression;
+					var name = dependencyDetailsFile.FileName;
+					var version = dependency.Version;
+					var sha = dependency.Sha;
+					var pinned = dependency.Pinned == true;
+					var expression = dependency.Expression;
 
 					results.Add(new Dependency(name, version, sha, pinned, expression)
 					{
@@ -235,7 +235,8 @@ namespace Conductor.Core
 					await repo.UpdateAssetsAsync(assets, cancellationToken);
 				}
 			}
-			// check quality of new repo content (do a build, etc.)
+
+            // check quality of new repo content (do a build, etc.)
 			if (subscription.IsDesiredQuality(repo))
 			{
 				await repo.MergeChangesAsync(subscription.TargetBranchName, cancellationToken);

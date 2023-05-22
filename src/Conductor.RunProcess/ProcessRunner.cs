@@ -23,8 +23,8 @@ namespace Conductor.RunProcess
 				return null;
 			}
 
-			string output = await process.StandardOutput.ReadToEndAsync();
-			string error = await process.StandardError.ReadToEndAsync();
+			var output = await process.StandardOutput.ReadToEndAsync();
+			var error = await process.StandardError.ReadToEndAsync();
 			await process.WaitForExitAsync();
 
 			return new RunResult(process.ExitCode, output, error);

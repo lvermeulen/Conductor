@@ -23,18 +23,18 @@ namespace Conductor.Core.Tests
 			_subsciptionsExecutor = new SubscriptionsExecutor(_conductor);
 		}
 
-		[Fact(/*Skip = "Not ready yet"*/)]
+		[Fact(Skip = "Not ready yet")]
 		public async Task ExecuteSubscriptionAsync()
 		{
-			string fileName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+			var fileName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 			var dir = Directory.CreateDirectory(fileName);
-			string repositoryPath = dir.FullName;
+			var repositoryPath = dir.FullName;
 
 			using (new AutoCleanupFolder(repositoryPath))
 			{
 				const string sourceRepositoryUrl = "https://github.com/lvermeulen/BuildMaster.Net.git";
 				var channel = await _conductor.AddBuildChannelAsync(sourceRepositoryUrl, ClassificationType.Product, sourceRepositoryUrl, "master", CancellationToken.None);
-				string artifactsUrl = new Uri(Environment.CurrentDirectory, UriKind.Absolute).LocalPath;
+				var artifactsUrl = new Uri(Environment.CurrentDirectory, UriKind.Absolute).LocalPath;
 				const string targetRepositoryUrl = "https://github.com/lvermeulen/ProGet.Net.git";
 				const string targetBranchName = "master";
 				var subscription = await channel.AddSubscriptionAsync(sourceRepositoryUrl, targetRepositoryUrl, targetBranchName, UpdateFrequency.Daily, Enumerable.Empty<string>(), CancellationToken.None);

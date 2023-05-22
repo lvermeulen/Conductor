@@ -7,6 +7,7 @@ using MediatR;
 namespace Conductor.Api.Features.Subscriptions
 {
     public record GetSubscriptionsRequest : IRequest<GetSubscriptionsResponse>;
+
     public record GetSubscriptionsResponse(IEnumerable<Subscription> Subscriptions);
 
     public class GetSubscriptionsHandler : IRequestHandler<GetSubscriptionsRequest, GetSubscriptionsResponse>

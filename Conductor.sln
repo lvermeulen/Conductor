@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.33711.374
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conductor.Core", "src\Conductor.Core\Conductor.Core.csproj", "{EE9CC4A9-4AF9-479B-9DCD-6AE50502FBD1}"
 EndProject
@@ -26,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solutio
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
+		Directory.Build.Props = Directory.Build.Props
 		global.json = global.json
 		README.md = README.md
 	EndProjectSection
@@ -66,9 +67,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conductor.GitOperations", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conductor.AzureDevOps.Api", "src\Conductor.AzureDevOps.Api\Conductor.AzureDevOps.Api.csproj", "{544CB4E8-F285-4AAF-A670-3555677153DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conductor.RunProcess", "src\Conductor.RunProcess\Conductor.RunProcess.csproj", "{E7812B0A-5C14-4AA5-9DA8-44CFE23FE5FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conductor.RunProcess", "src\Conductor.RunProcess\Conductor.RunProcess.csproj", "{E7812B0A-5C14-4AA5-9DA8-44CFE23FE5FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conductor.Core.Tests", "test\Conductor.Core.Tests\Conductor.Core.Tests.csproj", "{F33F27CD-C26E-47E5-88C1-56561B0BA596}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conductor.Core.Tests", "test\Conductor.Core.Tests\Conductor.Core.Tests.csproj", "{F33F27CD-C26E-47E5-88C1-56561B0BA596}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

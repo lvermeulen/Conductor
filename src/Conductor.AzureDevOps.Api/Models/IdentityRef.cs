@@ -6,7 +6,8 @@ namespace Conductor.AzureDevOps.Api.Models
 	{
 		[JsonProperty("_links")]
 		public ReferenceLinks Links { get; set; }
-		public string Descriptor { get; set; }
+
+        public string Descriptor { get; set; }
 		public string DirectoryAlias { get; set; }
 		public string DisplayName { get; set; }
 		public string Id { get; set; }

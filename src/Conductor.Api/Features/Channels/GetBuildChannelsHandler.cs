@@ -7,6 +7,7 @@ using MediatR;
 namespace Conductor.Api.Features.Channels
 {
     public record GetBuildChannelRequest(string Name) : IRequest<GetBuildChannelResponse>;
+
     public record GetBuildChannelResponse(BuildChannel Channel);
 
     public class GetBuildChannelHandler : IRequestHandler<GetBuildChannelRequest, GetBuildChannelResponse>
@@ -20,7 +21,7 @@ namespace Conductor.Api.Features.Channels
 
         public Task<GetBuildChannelResponse> Handle(GetBuildChannelRequest request, CancellationToken cancellationToken)
         {
-            foreach ((string key, var value) in _conductor.Channels)
+            foreach (var (key, value) in _conductor.Channels)
             {
                 if (key.Equals(request.Name, StringComparison.InvariantCultureIgnoreCase))
                 {

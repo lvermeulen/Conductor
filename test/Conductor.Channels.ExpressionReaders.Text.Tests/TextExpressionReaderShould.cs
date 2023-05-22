@@ -17,7 +17,7 @@ namespace Conductor.Channels.ExpressionReaders.Text.Tests
             try
             {
                 IExpressionReader reader = new TextExpressionReader();
-                string version = reader.ReadExpression(buildToolsVersion);
+                var version = reader.ReadExpression(buildToolsVersion);
                 Assert.Equal(s, version);
             }
             finally
