@@ -63,8 +63,8 @@ namespace Conductor.Channels.DependencyDetailsReaders.SystemTextJson.Tests
                 IDependencyDetailsReader reader = VersionDetailsJsonReader.LoadFrom(fileName);
                 var result = reader.ReadMetadata();
                 Assert.NotNull(result);
-                Assert.NotNull(result.Dependencies);
-                Assert.Equal(6, result.Dependencies.Count());
+                Assert.NotNull(result.ProductDependencies);
+                Assert.Equal(6, result.ProductDependencies.Count());
             }
             finally
             {
@@ -78,8 +78,8 @@ namespace Conductor.Channels.DependencyDetailsReaders.SystemTextJson.Tests
             IDependencyDetailsReader reader = VersionDetailsJsonReader.Parse(Text);
             var result = reader.ReadMetadata();
             Assert.NotNull(result);
-            Assert.NotNull(result.Dependencies);
-            Assert.Equal(6, result.Dependencies.Count());
+            Assert.NotNull(result.ProductDependencies);
+            Assert.Equal(6, result.ProductDependencies.Count());
         }
     }
 }

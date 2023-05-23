@@ -28,13 +28,14 @@ namespace Conductor.Abstractions
 
         public Task<IEnumerable<BuildInfo>> GetBuildsAsync() => Task.FromResult(Builds.Values.AsEnumerable());
 
-        public Task<BuildInfo> GetBuildAsync(string buildName, CancellationToken cancellationToken)
+        public async Task<BuildInfo?> GetBuildAsync(string buildName, CancellationToken cancellationToken)
         {
+            await Task.Yield();
 	        var result = Builds.TryGetValue(buildName, out var buildNameValue)
                 ? buildNameValue
                 : default;
 
-	        return Task.FromResult(result);
+	        return result;
         }
 
         public Task<bool> AddOrUpdateBuildAsync(BuildInfo buildInfo, CancellationToken cancellationToken)
@@ -54,11 +55,12 @@ namespace Conductor.Abstractions
 	        return Task.FromResult(true);
         }
 
-        private Task<Subscription> AddSubscriptionAsync(Subscription subscription, CancellationToken cancellationToken)
+        private async Task<Subscription> AddSubscriptionAsync(Subscription subscription, CancellationToken cancellationToken)
         {
+            await Task.Yield();
             Subscriptions.Add(subscription);
 
-            return Task.FromResult(subscription);
+            return subscription;
         }
 
         public async Task<Subscription> AddSubscriptionAsync(string sourceRepositoryUrl, string targetRepositoryUrl, string targetBranchName, UpdateFrequency updateFrequency, IEnumerable<string> policies, CancellationToken cancellationToken)
@@ -69,8 +71,10 @@ namespace Conductor.Abstractions
             return subscription;
         }
 
-        public Task<Subscription> EditSubscriptionAsync(Guid id, string sourceRepositoryUrl, string targetRepositoryUrl, string targetBranchName, UpdateFrequency updateFrequency, IEnumerable<string> policies, CancellationToken cancellationToken)
+        public async Task<Subscription?> EditSubscriptionAsync(Guid id, string sourceRepositoryUrl, string targetRepositoryUrl, string targetBranchName, UpdateFrequency updateFrequency, IEnumerable<string> policies, CancellationToken cancellationToken)
         {
+            await Task.Yield();
+
             var subscription = Subscriptions.FirstOrDefault(x => x.Id == id);
             if (subscription is not null)
             {
@@ -89,7 +93,7 @@ namespace Conductor.Abstractions
                 Subscriptions.Add(subscription);
             }
 
-            return Task.FromResult(subscription);
+            return subscription;
         }
 
         public Task RemoveSubscriptionAsync(Subscription subscription, CancellationToken cancellationToken)

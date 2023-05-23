@@ -60,24 +60,19 @@ namespace Conductor.Core
 
 	        var channelName = buildInfo.ChannelName;
 	        var channel = await FindBuildChannelByNameAsync(channelName, cancellationToken);
-	        if (channel is not null)
-	        {
-		        var result = await channel.AddOrUpdateBuildAsync(buildInfo, cancellationToken);
-		        if (result)
-		        {
-			        foreach (var buildChannel in Channels)
-			        {
-				        foreach (var subscription in buildChannel.Value.Subscriptions)
-				        {
-					        await _subscriptionsExecutor.ExecuteSubscriptionAsync(buildInfo, subscription, repositoryPath, cancellationToken);
-				        }
-			        }
-		        }
+            var result = await channel.AddOrUpdateBuildAsync(buildInfo, cancellationToken);
+            if (result)
+            {
+                foreach (var buildChannel in Channels)
+                {
+                    foreach (var subscription in buildChannel.Value.Subscriptions)
+                    {
+                        await _subscriptionsExecutor.ExecuteSubscriptionAsync(buildInfo, subscription, repositoryPath, default, cancellationToken);
+                    }
+                }
+            }
 
-		        return result;
-	        }
-
-	        return false;
+            return result;
         }
     }
 }
